@@ -1,39 +1,34 @@
 package com.example.demo.Controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.Models.User;
+import com.example.demo.Repositories.UserRepository;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+import java.util.List;
 
-class Response{
-    Response(String t){
-        this.t = t;
-    }
-    private String t;
-
-    public String getS() {
-        return t;
-    }
-
-    public void setS(String s) {
-        this.t = t;
-    }
-}
 @CrossOrigin
 @RestController
+@RequestMapping("/user")
 public class UserController {
-    char c = 10;
-    final String MESSAGE_TEXT = "       T        T"+ c +
-                                  "     T  T      T  T  " + c +
-                                  "    T    TTTTTT    T" + c +
-                                  "   T     O     O    T" + c +
-                                  "  T         T        T" + c +
-                                  "   T                T" + c +
-                                  "     TTTTTTTTTTTTTT";
-    @CrossOrigin
-    @GetMapping("/message")
-    public Response message(){
-        return new Response(MESSAGE_TEXT);
+    UserController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+    private final UserRepository userRepository;
+
+    @GetMapping
+    public User findUser(@RequestParam String login, @RequestParam String password){
+        User response = null;
+        for(User user : userRepository.findUsersByLogin(login)){
+            if (user.getPassword().equals(password)){
+                response = user;
+            }
+        }
+        return response;
+    }
+    @PostMapping
+    public boolean authorization(@RequestParam String login, @RequestParam String password, @RequestParam String name, @RequestParam String surname){
+            userRepository.addUser(login,password,name,surname);
+            return true;
     }
 }
