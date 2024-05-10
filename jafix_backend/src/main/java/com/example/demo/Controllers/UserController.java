@@ -17,18 +17,23 @@ public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping
-    public User findUser(@RequestParam String login, @RequestParam String password){
-        User response = null;
-        for(User user : userRepository.findUsersByLogin(login)){
-            if (user.getPassword().equals(password)){
-                response = user;
-            }
+    public User authorization(@RequestBody User user){
+        User response = userRepository.findUserByLogin(user.getLogin());
+        if (response==null){
+            return new User();
+        }else if(response.getPassword().equals(user.getPassword())){
+            response.setAccess(true);
+            return response;
+        }else {
+            return response;
         }
-        return response;
     }
     @PostMapping
-    public boolean authorization(@RequestParam String login, @RequestParam String password, @RequestParam String name, @RequestParam String surname){
-            userRepository.addUser(login,password,name,surname);
-            return true;
+    public String registration(@RequestBody User user){
+        if(userRepository.findUserByLogin(user.getLogin()) != null){
+            return "User already exists";
+        }
+            userRepository.addUser(user.getLogin(),user.getPassword(),user.getName(),user.getSurname());
+            return "You have registered";
     }
 }

@@ -29,9 +29,14 @@ public class UserRepository {
         String sql = "SELECT * FROM user";
         return jdbc.query(sql, userRowMapper);
     }
-    public List<User> findUsersByLogin(String login){
+    public User findUserByLogin(String login){
         String sql = "SELECT * FROM user WHERE login = ?";
-        return jdbc.query(sql, userRowMapper,login);
+        if (jdbc.query(sql, userRowMapper,login).size()>0){
+            return jdbc.query(sql, userRowMapper,login).get(0);
+        }else {
+            return null;
+        }
+
     }
     public void addUser(String login, String password, String name, String surname){
         String sql = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, 0.0, NULL)";
