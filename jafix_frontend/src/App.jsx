@@ -1,28 +1,53 @@
 import Header from "./components/Header"
 import main_photo from '/main_photo.svg'
-import axios from 'axios';
-// Определение адреса API
-// Определение адреса API
-fetch('http://localhost:8080/message')
-  .then(response => response.json())
-  .then(data => console.log("Успех успешный"));
+import React from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import "./App.css";
 
-const apiEndpoint = 'http://localhost:8080/message';
+function App() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-// Отправка GET запроса к серверу
-axios.get(apiEndpoint)
-  .then(response => {
-    // Вывод данных из ответа сервера
-    console.log('Успешное подключение к серверу');
-    console.log('Данные с сервера:', response.data);
-  })
-  .catch(error => {
-    // Обработка ошибки при подключении или запросе
-    console.error('Ошибка при подключении к серверу:', error);
-  });
+  const onSubmit = (data) => {
+    // Определение адреса API для отправки данных
+    const apiEndpoint = 'http://localhost:8080/message'; // Замените на корректный адрес API
+
+    // Отправка POST запроса с данными формы на сервер
+    axios.post(apiEndpoint, data)
+      .then(response => {
+        // Вывод данных из ответа сервера (если нужно)
+        console.log('Успешное подключение к серверу');
+        console.log('Ответ сервера:', response.data);
+      })
+      .catch(error => {
+        // Обработка ошибки при подключении или запросе
+        console.error('Ошибка при подключении к серверу:', error);
+      });
+  };
+
+  return (
+    <>
+      <p className="title">Registration Form</p>
+
+      <form className="App" onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder="Name" {...register("name")} />
+        <input type="text" placeholder="Surname" {...register("surname")} />
+        <input type="text" placeholder="Login" {...register("login")} />
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password")}
+        />
+        <input type={"submit"} style={{ backgroundColor: "#a1eafb" }} />
+      </form>
+    </>
+  );
+}
+
+export default App;
 
 
-export default function App() {
+/*export default function App() {
   return (
   
       <div>
@@ -44,5 +69,5 @@ export default function App() {
       </div>
 
   )
-}
+}*/
 
