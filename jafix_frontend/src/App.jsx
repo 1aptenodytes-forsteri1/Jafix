@@ -10,7 +10,7 @@ function App() {
 
   const onSubmit = (data) => {
     // Определение адреса API для отправки данных
-    const apiEndpoint = 'http://localhost:8080/message'; // Замените на корректный адрес API
+    const apiEndpoint = 'http://localhost:8080/user'; // Замените на корректный адрес API
 
     // Отправка POST запроса с данными формы на сервер
     axios.post(apiEndpoint, data)

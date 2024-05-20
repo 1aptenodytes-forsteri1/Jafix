@@ -25,10 +25,6 @@ public class UserRepository {
         this.jdbc = jdbc;
     }
 
-    public List<User> findAllUsers() {
-        String sql = "SELECT * FROM user";
-        return jdbc.query(sql, userRowMapper);
-    }
     public User findUserByLogin(String login){
         String sql = "SELECT * FROM user WHERE login = ?";
         if (jdbc.query(sql, userRowMapper,login).size()>0){

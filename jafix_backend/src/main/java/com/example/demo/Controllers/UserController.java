@@ -25,6 +25,7 @@ public class UserController {
             response.setAccess(true);
             return response;
         }else {
+            response.setPassword("");
             return response;
         }
     }
