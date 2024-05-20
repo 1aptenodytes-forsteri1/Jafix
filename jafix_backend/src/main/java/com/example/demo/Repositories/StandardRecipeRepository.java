@@ -28,8 +28,8 @@ public class StandardRecipeRepository {
         StandardRecipeComponent standardRecipeComponent = new StandardRecipeComponent(
                 r.getInt("component_id"),
                 r.getInt("standard_recipe_id"),
-                r.getString("ingredient.name"),
-                r.getString("amount")
+                r.getString("name"),
+                r.getInt("amount") + r.getString("units")
         );
         return standardRecipeComponent;
     };
@@ -43,7 +43,7 @@ public class StandardRecipeRepository {
     }
     public List<StandardRecipeComponent> getComponentsById(Integer id){
         List<StandardRecipeComponent> standardRecipes = new ArrayList<>();
-        String sql = "SELECT component_id, standard_recipe_id, ingredient.name, amount FROM standard_recipe_component INNER JOIN ingredient ON standard_recipe_component.ingredient_id = ingredient.ingredient_id WHERE standard_recipe_id = ?;";
+        String sql = "SELECT component_id, standard_recipe_id, name, amount, units FROM standard_recipe_component INNER JOIN ingredient ON standard_recipe_component.ingredient_id = ingredient.ingredient_id WHERE standard_recipe_id = ?;";
         for (StandardRecipeComponent component : jdbcTemplate.query(sql, componentRowMapper, id)){
             standardRecipes.add(component);
         }

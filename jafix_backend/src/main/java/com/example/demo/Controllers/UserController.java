@@ -37,4 +37,10 @@ public class UserController {
             userRepository.addUser(user.getLogin(),user.getPassword(),user.getName(),user.getSurname());
             return "You have registered";
     }
+
+    @PatchMapping
+    public String patchUser(@RequestBody User user){
+        userRepository.updateUser(user);
+        return "successfully updated";
+    }
 }

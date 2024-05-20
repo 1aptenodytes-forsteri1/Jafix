@@ -38,4 +38,8 @@ public class UserRepository {
         String sql = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, 0.0, NULL)";
         jdbc.update(sql,login,password,name,surname);
     }
+    public void updateUser(User user){
+        String sql = "UPDATE user SET login = ?, password = ?, name = ?, surname = ? WHERE user_id = ?;";
+        jdbc.update(sql,user.getLogin(),user.getPassword(),user.getName(),user.getSurname(),user.getId());
+    }
 }
