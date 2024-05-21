@@ -1,9 +1,10 @@
 package com.example.demo.Models;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class CustomRecipe {
+
+    private Integer id;
     private Integer userId;
     private Double cost;
     private String name;
@@ -15,8 +16,18 @@ public class CustomRecipe {
         this.name = name;
         this.components = components;
     }
-
-
+    public CustomRecipe(Integer id, Integer userId, Double cost, String name) {
+        this.id = id;
+        this.userId = userId;
+        this.cost = cost;
+        this.name = name;
+    }
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public Integer getUserId() {
         return userId;
     }

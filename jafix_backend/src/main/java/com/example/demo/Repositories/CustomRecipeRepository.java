@@ -1,12 +1,13 @@
 package com.example.demo.Repositories;
 
 import com.example.demo.Models.CustomRecipe;
+import com.example.demo.Models.CustomRecipeComponent;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,22 @@ public class CustomRecipeRepository {
     };
     private final RowMapper<Double> price = (r,i)->{
         return r.getDouble("price");
+    };
+    private final RowMapper<CustomRecipe> recipes = (r,i)->{
+        return new CustomRecipe(
+                r.getInt("custom_recipe_id"),
+                r.getInt("user_id"),
+                r.getDouble("cost"),
+                r.getString("name")
+        );
+    };
+    private final RowMapper<CustomRecipeComponent> components = (r,i)->{
+        return new CustomRecipeComponent(
+                r.getInt("component_id"),
+                r.getInt("recipe_id"),
+                r.getString("name"),
+                String.format("%d%s",r.getInt("amount"),r.getString("units"))
+        );
     };
     private final JdbcTemplate jdbcTemplate;
     CustomRecipeRepository(JdbcTemplate jdbcTemplate){
@@ -48,10 +65,26 @@ public class CustomRecipeRepository {
 
         return Math.floor(cost * 100) / 100;
     }
+    private Map<String,String> getComponents(Integer id){
+        Map<String,String> map = new HashMap<>();
+        String sql = "SELECT component_id, recipe_id, name, amount, units FROM custom_recipe_component INNER JOIN ingredient ON custom_recipe_component.ingredient_id = ingredient.ingredient_id;";
+        for (CustomRecipeComponent component : jdbcTemplate.query(sql,components)){
+            map.put(component.getIngredient(),component.getAmount());
+        }
+        return map;
+    }
     @Transactional
     public void addRecipe(CustomRecipe customRecipe){
         String sql = "INSERT INTO custom_recipe VALUES (NULL,?,?,?)";
         jdbcTemplate.update(sql,customRecipe.getUserId(),getCost(customRecipe.getComponents()),customRecipe.getName());
         addComponents(customRecipe.getComponents(),getRecipeId());
+    }
+    public List<CustomRecipe> getRecipesByUser(Integer id){
+        String sql = String.format("SELECT * FROM custom_recipe WHERE user_id = %d", id);
+        List<CustomRecipe> result = jdbcTemplate.query(sql,recipes);
+        for (CustomRecipe customRecipe : result){
+            customRecipe.setComponents(getComponents(customRecipe.getId()));
+        }
+        return result;
     }
 }
