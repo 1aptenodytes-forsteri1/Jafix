@@ -1,0 +1,22 @@
+.card{
+  background-color: antiquewhite;
+  border-radius: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin:  1em;
+}
+
+.img_baskets{
+  height: 100px;
+  padding: 1em;
+}
+.card_delete{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: brown;
+  border-radius: 1.5em;
+  width: 40px;
+  height: 40px;
+}
