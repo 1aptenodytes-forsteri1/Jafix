@@ -4,10 +4,10 @@ public class ProductComponent {
     private Integer id;
     private Integer batch_id;
     private Integer product_id;
-    private Integer amount;
+    private String amount;
     private String ingredient;
 
-    public ProductComponent(Integer id, Integer batch_id, Integer product_id, Integer amount, String ingredient) {
+    public ProductComponent(Integer id, Integer batch_id, Integer product_id, String amount, String ingredient) {
         this.id = id;
         this.batch_id = batch_id;
         this.product_id = product_id;
@@ -39,11 +39,11 @@ public class ProductComponent {
         this.product_id = product_id;
     }
 
-    public Integer getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

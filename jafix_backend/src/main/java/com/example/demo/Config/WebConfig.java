@@ -10,9 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/message")
+        registry.addMapping("/")
                 .allowedOrigins("*") // Разрешенные источники (можете указать конкретные источники)
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Разрешенные HTTP методы
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE") // Разрешенные HTTP методы
                 .allowedHeaders("*"); // Разрешенные заголовки
     }
 }

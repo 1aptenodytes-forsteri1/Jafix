@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import classes from './Men.module.css';
 import lattte from './latte.svg';
 import { CartContext } from '../../CartContext';
@@ -10,13 +10,16 @@ function FillMenu(props) {
         event.preventDefault();
         addToCart(props);
     };
-
+    const componentsArray = Object.entries(props.components).map(([key, value]) => (
+        <p key={key}>{key}: {value}</p>
+    ));
+    
     return (
         <div className={classes.box}>
             <img src={lattte} alt="" />
             <div className={classes.content}>
                 <h3>{props.name}</h3>
-                <p>{props.components}</p>
+                {componentsArray}
                 <span>{props.price}</span>
                 <button className='btn' data-id={props.standart_recipe_id} onClick={handleAddToCart}>Нажми</button>
             </div>
@@ -25,43 +28,20 @@ function FillMenu(props) {
 }
 
 export default function Men() {
-    const [coffeeProducts, setCoffeeProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [menuItems, setMenuItems] = useState([]);
 
     useEffect(() => {
-        const fetchCoffeeProducts = async () => {
-            try {
-                const response = await fetch('/api/coffee'); // Тут ссылку вставь
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setCoffeeProducts(data);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCoffeeProducts();
+        fetch('http://localhost:8080/standard_recipes')
+            .then(response => response.json())
+            .then(data => setMenuItems(data));
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
-        <>
-            <h1 className="heading">Меню<span>Выбери свой кофе</span></h1>
+        <> 
+           <h1 className="heading">Меню<span>Выбери свой кофе</span></h1>
             <div className={classes.menu}>
                 <div className={classes.box_container}>
-                    {coffeeProducts.map((item, index) => (
+                    {menuItems.map((item, index) => (
                         <FillMenu key={index} {...item} />
                     ))}
                 </div>
