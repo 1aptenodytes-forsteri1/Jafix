@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Models.User;
+import com.example.demo.Models.UserId;
 import com.example.demo.Repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     UserController(UserRepository userRepository){
         this.userRepository = userRepository;
@@ -17,16 +18,14 @@ public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping
-    public User authorization(@RequestBody User user){
-        User response = userRepository.findUserByLogin(user.getLogin());
+    public UserId authorization(@RequestParam String login, @RequestParam String password){
+        User response = userRepository.findUserByLogin(login);
         if (response==null){
-            return new User();
-        }else if(response.getPassword().equals(user.getPassword())){
-            response.setAccess(true);
-            return response;
+            return new UserId(0);
+        }else if(response.getPassword().equals(password)){
+            return new UserId(response.getId());
         }else {
-            response.setPassword("");
-            return response;
+            return new UserId(0);
         }
     }
     @PostMapping

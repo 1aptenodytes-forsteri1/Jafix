@@ -2,6 +2,7 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Models.Ingredient;
 import com.example.demo.Repositories.IngredientRepository;
+import com.example.demo.Services.IngredientService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
-    private final IngredientRepository ingredientRepository;
-    IngredientController(IngredientRepository ingredientRepository){
-        this.ingredientRepository = ingredientRepository;
+    private final IngredientService ingredientService;
+    IngredientController(IngredientService ingredientService){
+        this.ingredientService = ingredientService;
     }
     @GetMapping
     public List<Ingredient> getIngredients(){
-        return ingredientRepository.getIngredients();
+        return ingredientService.ingredientsForRecipes();
     }
 }

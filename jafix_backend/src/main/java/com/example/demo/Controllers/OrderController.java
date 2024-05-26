@@ -23,4 +23,7 @@ public class OrderController {
     public void makeOrder(@RequestBody Order order){
         orderRepository.makeOrder(order);
     }
+    @PatchMapping void completeOrder(@RequestBody Order order){
+        orderRepository.completeOrder(order.getOrderId());
+    }
 }

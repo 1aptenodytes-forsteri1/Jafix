@@ -18,7 +18,6 @@ public class UserRepository {
         rowObject.setName(r.getString("name"));
         rowObject.setSurname(r.getString("surname"));
         rowObject.setBonuses(r.getDouble("bonuses"));
-        rowObject.setRights(r.getString("rights"));
         return rowObject;
     };
     public UserRepository(JdbcTemplate jdbc) {

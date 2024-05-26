@@ -31,7 +31,7 @@ export default function Men() {
     const [menuItems, setMenuItems] = useState([]);
 
     useEffect(() => {
-        fetch('url_to_your_server_endpoint')
+        fetch('http://localhost:8080/standard_recipes')
             .then(response => response.json())
             .then(data => setMenuItems(data));
     }, []);

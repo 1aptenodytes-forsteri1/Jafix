@@ -6,7 +6,7 @@ import { loginUser } from '../authService';
 
 const LoginPage = () => {
   const { login } = useAuth();
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [credentials, setCredentials] = useState({ login: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -15,25 +15,29 @@ const LoginPage = () => {
     setCredentials((prev) => ({ ...prev, [name]: value }));
   };
 
+
   const handleLogin = async () => {
     try {
-      await loginUser(credentials);
-      login();
-      navigate('/');
+      const data = await loginUser(credentials);
+      if (data.id !== 0) {
+        login(data.id);  // Сохраняем ID пользователя в контексте при авторизации
+        navigate('/');
+      } else {
+        setError('Login failed: Invalid credentials');
+      }
     } catch (err) {
       setError('Login failed: ' + err.message);
     }
   };
-
   return (
     <div>
       <h1>Login</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <input
         type="text"
-        name="username"
-        placeholder="Username"
-        value={credentials.username}
+        name="login"
+        placeholder="Login"
+        value={credentials.login}
         onChange={handleInputChange}
       />
       <input

@@ -6,7 +6,7 @@ import { registerUser } from '../authService';
 
 const RegisterPage = () => {
   const { register } = useAuth();
-  const [userDetails, setUserDetails] = useState({ name: '', surname: '', username: '', password: '' });
+  const [userDetails, setUserDetails] = useState({ login: '', password: '' ,name: '', surname: '',});
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -29,6 +29,21 @@ const RegisterPage = () => {
     <div>
       <h1>Register</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      <input
+        type="text"
+        name="login"
+        placeholder="Login"
+        value={userDetails.username}
+        onChange={handleInputChange}
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={userDetails.password}
+        onChange={handleInputChange}
+      />
       <input
         type="text"
         name="name"
@@ -41,20 +56,6 @@ const RegisterPage = () => {
         name="surname"
         placeholder="Surname"
         value={userDetails.surname}
-        onChange={handleInputChange}
-      />
-      <input
-        type="text"
-        name="username"
-        placeholder="Username"
-        value={userDetails.username}
-        onChange={handleInputChange}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={userDetails.password}
         onChange={handleInputChange}
       />
       <button onClick={handleRegister}>Register</button>

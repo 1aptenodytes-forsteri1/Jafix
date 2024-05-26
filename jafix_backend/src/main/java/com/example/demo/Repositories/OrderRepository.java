@@ -50,7 +50,6 @@ public class OrderRepository {
         String addOrder = "INSERT INTO customers_order VALUES(NULL,?,?,?,?)";
         String addStandard = "INSERT INTO coffee_order VALUES (NULL, NULL, ?,?)";
         String addCustom = "INSERT INTO coffee_order VALUES (NULL, ?,?,NULL)";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(order.getTime());
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
         jdbcTemplate.update(addOrder,order.getUserId(),order.getCost(),timestamp,true);
@@ -86,5 +85,9 @@ public class OrderRepository {
     private List<CoffeeOrder> getCoffeesByOrderId(Integer id){
         String sql = "SELECT * FROM coffee_order";
         return jdbcTemplate.query(sql,coffeeOrderRowMapper);
+    }
+    public void completeOrder(Integer orderId){
+        String sql = "UPDATE customers_order SET active = 0 WHERE order_id = ?;";
+        jdbcTemplate.update(sql,orderId);
     }
 }

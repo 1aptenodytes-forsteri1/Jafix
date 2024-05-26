@@ -95,5 +95,4 @@ public class CustomRecipeRepository {
         customRecipe.setComponents(getComponents(id));
         return customRecipe;
     }
-
 }

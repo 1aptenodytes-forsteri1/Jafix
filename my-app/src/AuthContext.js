@@ -7,15 +7,18 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
-  const login = () => {
+  const login = (id) => {
     setIsAuthenticated(true);
+    setUserId(id);
     navigate('/');
   };
 
   const logout = () => {
     setIsAuthenticated(false);
+    setUserId(null);
     navigate('/login');
   };
 
@@ -25,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, register }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, register, userId }}>
       {children}
     </AuthContext.Provider>
   );

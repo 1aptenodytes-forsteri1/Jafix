@@ -2,24 +2,22 @@ package com.example.demo.Models;
 
 public class User {
     public User(){}
-    public User(Integer id, String login, String password, String name, String surname, Double bonuses, String rights) {
+
+    private Integer id;
+    private String login;
+    private String password;
+    private String name;
+    private String surname;
+    private Double bonuses;
+    private boolean access;
+    public User(Integer id, String login, String password, String name, String surname, Double bonuses) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.bonuses = bonuses;
-        this.rights = rights;
     }
-    private Integer id = 0;
-    private String login = "unknown";
-    private String password = "unknown";
-    private String name = "unknown";
-    private String surname = "unknown";
-    private Double bonuses = 0.0;
-    private String rights = "unknown";
-    private boolean access = false;
-
     public boolean isAccess() {
         return access;
     }
@@ -27,8 +25,6 @@ public class User {
     public void setAccess(boolean access) {
         this.access = access;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -78,11 +74,4 @@ public class User {
         this.bonuses = bonuses;
     }
 
-    public String getRights() {
-        return rights;
-    }
-
-    public void setRights(String rights) {
-        this.rights = rights;
-    }
 }

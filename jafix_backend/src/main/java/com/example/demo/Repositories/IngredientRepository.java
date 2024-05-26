@@ -15,7 +15,8 @@ public class IngredientRepository {
                 r.getInt("ingredient_id"),
                 r.getString("name"),
                 r.getDouble("price"),
-                r.getString("units")
+                r.getString("units"),
+                r.getString("description")
         );
     };
     IngredientRepository(JdbcTemplate jdbcTemplate){

@@ -24,7 +24,8 @@ public class Order {
     }
 
     @JsonCreator
-    public Order(Integer userId, Double cost, List<StandardRecipe> standardRecipes, List<CustomRecipe> customRecipes) {
+    public Order(Integer orderId, Integer userId, Double cost, List<StandardRecipe> standardRecipes, List<CustomRecipe> customRecipes) {
+        this.orderId = orderId;
         this.userId = userId;
         this.cost = cost;
         this.time = LocalDateTime.now().toString();
