@@ -54,12 +54,17 @@ public class OrderRepository {
         LocalDateTime localDateTime = LocalDateTime.parse(order.getTime());
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
         jdbcTemplate.update(addOrder,order.getUserId(),order.getCost(),timestamp,true);
+        order.setOrderId(getLatestOrder().getOrderId());
         for (StandardRecipe standardRecipe : order.getStandardRecipes()){
             jdbcTemplate.update(addStandard,order.getOrderId(),standardRecipe.getId());
         }
         for (CustomRecipe customRecipe : order.getCustomRecipes()){
-            jdbcTemplate.update(addStandard,customRecipe.getId(),order.getOrderId());
+            jdbcTemplate.update(addCustom,customRecipe.getId(),order.getOrderId());
         }
+    }
+    private Order getLatestOrder(){
+        String sql = "SELECT * FROM customers_order WHERE order_id = (SELECT MAX(order_id) FROM customers_order);";
+        return jdbcTemplate.query(sql,orderRowMapper).get(0);
     }
     public List<Order> getOrders(){
         List<Order> orders;
