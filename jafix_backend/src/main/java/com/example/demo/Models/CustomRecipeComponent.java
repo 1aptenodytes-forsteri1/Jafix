@@ -3,12 +3,14 @@ package com.example.demo.Models;
 public class CustomRecipeComponent {
     private Integer component_id;
     private Integer custom_recipe_id;
+    private Integer batch_id;
     private String ingredient;
     private String amount;
 
-    public CustomRecipeComponent(Integer component_id, Integer custom_recipe_id, String ingredient, String amount) {
+    public CustomRecipeComponent(Integer component_id, Integer custom_recipe_id,Integer batch_id, String ingredient, String amount) {
         this.component_id = component_id;
         this.custom_recipe_id = custom_recipe_id;
+        this.batch_id = batch_id;
         this.ingredient = ingredient;
         this.amount = amount;
     }
@@ -39,5 +41,11 @@ public class CustomRecipeComponent {
     public String getAmount() {
         return amount;
     }
+    public Integer getBatch_id() {
+        return batch_id;
+    }
 
+    public void setBatch_id(Integer batch_id) {
+        this.batch_id = batch_id;
+    }
 }

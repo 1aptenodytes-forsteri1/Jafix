@@ -14,7 +14,7 @@ import java.util.Map;
 @Repository
 public class CustomRecipeRepository {
     private final RowMapper<Integer> ingredient_id = (r,i)->{
-        return r.getInt("ingredient_id");
+        return r.getInt("batch_id");
     };
     private final RowMapper<Integer> recipe_id = (r,i)->{
         return r.getInt("id");
@@ -34,6 +34,7 @@ public class CustomRecipeRepository {
         return new CustomRecipeComponent(
                 r.getInt("component_id"),
                 r.getInt("recipe_id"),
+                r.getInt("batch_id"),
                 r.getString("name"),
                 String.format("%d%s",r.getInt("amount"),r.getString("units"))
         );
@@ -43,7 +44,7 @@ public class CustomRecipeRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
     private Integer findId(String name){
-        String sql = String.format("SELECT ingredient_id FROM ingredient WHERE name = \"%s\"",name);
+        String sql = String.format("SELECT batch_id FROM batch INNER JOIN ingredient ON batch.ingredient_id = ingredient.ingredient_id WHERE name = \"%s\"",name);
         return jdbcTemplate.query(sql,ingredient_id).get(0);
     }
     private void addComponents(Map<String,String> components, Integer id){
@@ -67,8 +68,8 @@ public class CustomRecipeRepository {
     }
     private Map<String,String> getComponents(Integer id){
         Map<String,String> map = new HashMap<>();
-        String sql = "SELECT component_id, recipe_id, name, amount, units FROM custom_recipe_component INNER JOIN ingredient ON custom_recipe_component.ingredient_id = ingredient.ingredient_id;";
-        for (CustomRecipeComponent component : jdbcTemplate.query(sql,components)){
+        String sql = "SELECT component_id, recipe_id, custom_recipe_component.batch_id, name, custom_recipe_component.amount, units FROM custom_recipe_component INNER JOIN batch ON custom_recipe_component.batch_id = batch.batch_id INNER JOIN ingredient ON batch.ingredient_id = ingredient.ingredient_id WHERE recipe_id = ?;";
+        for (CustomRecipeComponent component : jdbcTemplate.query(sql,components,id)){
             map.put(component.getIngredient(),component.getAmount());
         }
         return map;
@@ -87,4 +88,12 @@ public class CustomRecipeRepository {
         }
         return result;
     }
+    public CustomRecipe getRecipeByID(Integer id){
+        CustomRecipe customRecipe;
+        String sql = "SELECT * FROM custom_recipe WHERE custom_recipe_id = ?";
+        customRecipe = jdbcTemplate.query(sql, recipes, id).get(0);
+        customRecipe.setComponents(getComponents(id));
+        return customRecipe;
+    }
+
 }

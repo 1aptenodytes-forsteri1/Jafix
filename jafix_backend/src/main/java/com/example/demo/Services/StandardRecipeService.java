@@ -20,7 +20,7 @@ public class StandardRecipeService {
         for (StandardRecipe standardRecipe : standardRecipeRepository.getAllRecipes()){
             File path = new File(standardRecipe.getImage());
             standardRecipe.setImage(path.getAbsolutePath());
-            List<StandardRecipeComponent> standardRecipeComponents = standardRecipeRepository.getComponentsById(standardRecipe.getStandard_recipe_id());
+            List<StandardRecipeComponent> standardRecipeComponents = standardRecipeRepository.getComponentsById(standardRecipe.getId());
             for (StandardRecipeComponent standardRecipeComponent : standardRecipeComponents){
                 standardRecipe.addComponent(standardRecipeComponent.getIngredient(),standardRecipeComponent.getAmount());
             }

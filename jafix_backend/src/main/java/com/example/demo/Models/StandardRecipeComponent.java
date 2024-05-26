@@ -3,14 +3,24 @@ package com.example.demo.Models;
 public class StandardRecipeComponent {
     private Integer component_id;
     private Integer standard_recipe_id;
+    private Integer batch_id;
     private String ingredient;
     private String amount;
 
-    public StandardRecipeComponent(Integer component_id, Integer standard_recipe_id, String ingredient, String amount) {
+    public StandardRecipeComponent(Integer component_id, Integer standard_recipe_id,Integer batch_id, String ingredient, String amount) {
         this.component_id = component_id;
         this.standard_recipe_id = standard_recipe_id;
+        this.batch_id = batch_id;
         this.ingredient = ingredient;
         this.amount = amount;
+    }
+
+    public Integer getBatch_id() {
+        return batch_id;
+    }
+
+    public void setBatch_id(Integer batch_id) {
+        this.batch_id = batch_id;
     }
     public Integer getComponent_id() {
         return component_id;

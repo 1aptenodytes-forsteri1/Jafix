@@ -3,15 +3,14 @@ package com.example.demo.Models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StandardRecipe {
-    private Integer standard_recipe_id;
+public class StandardRecipe{
+    private Integer id;
     private String name;
     private Double price;
     private String image;
-
     private Map<String,String> components = new HashMap<String,String>();
-    public StandardRecipe(Integer standard_recipe_id, String name, Double price, String image) {
-        this.standard_recipe_id = standard_recipe_id;
+    public StandardRecipe(Integer id, String name, Double price, String image) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.image = image;
@@ -22,12 +21,15 @@ public class StandardRecipe {
     public Map<String, String> getComponents() {
         return components;
     }
-    public Integer getStandard_recipe_id() {
-        return standard_recipe_id;
+    public void setComponents(Map<String, String> components) {
+        this.components = components;
+    }
+    public Integer getId() {
+        return id;
     }
 
-    public void setStandard_recipe_id(Integer standard_recipe_id) {
-        this.standard_recipe_id = standard_recipe_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

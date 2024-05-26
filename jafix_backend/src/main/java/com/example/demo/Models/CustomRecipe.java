@@ -2,7 +2,7 @@ package com.example.demo.Models;
 
 import java.util.Map;
 
-public class CustomRecipe {
+public class CustomRecipe{
 
     private Integer id;
     private Integer userId;
@@ -10,12 +10,6 @@ public class CustomRecipe {
     private String name;
     private Map<String, String> components;
 
-    public CustomRecipe(Integer userId, Double cost, String name, Map<String, String> components) {
-        this.userId = userId;
-        this.cost = cost;
-        this.name = name;
-        this.components = components;
-    }
     public CustomRecipe(Integer id, Integer userId, Double cost, String name) {
         this.id = id;
         this.userId = userId;
