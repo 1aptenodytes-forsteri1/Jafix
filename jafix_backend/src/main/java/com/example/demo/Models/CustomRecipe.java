@@ -8,9 +8,6 @@ public class CustomRecipe{
     private Integer userId;
     private Double cost;
     private String name;
-
-
-
     private String whatIs = "custom_recipe";
     private Map<String, String> components;
 

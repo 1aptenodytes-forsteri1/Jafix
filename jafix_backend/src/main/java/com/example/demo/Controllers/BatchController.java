@@ -16,8 +16,8 @@ public class BatchController {
         this.batchRepository = batchRepository;
     }
     @GetMapping
-    public List<Batch> getBatchesByCoffeeHouse(@RequestBody CoffeeHouse coffeeHouse){
-        return batchRepository.getBatchesByCoffeeHouse(coffeeHouse.id());
+    public List<Batch> getBatchesByCoffeeHouse(@RequestParam Integer coffeeHouseId){
+        return batchRepository.getBatchesByCoffeeHouse(coffeeHouseId);
     }
     @PostMapping
     public void addBatch(@RequestBody Batch batch){

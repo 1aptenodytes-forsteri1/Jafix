@@ -18,15 +18,21 @@ public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping
-    public UserId authorization(@RequestParam String login, @RequestParam String password){
+    public User authorization(@RequestParam(required = false) String login, @RequestParam(required = false) String password, @RequestParam(required = false) Integer userId){
         User response = userRepository.findUserByLogin(login);
-        if (response==null){
-            return new UserId(0);
-        }else if(response.getPassword().equals(password)){
-            return new UserId(response.getId());
-        }else {
-            return new UserId(0);
+        if(userId != null){
+            return userRepository.findUserById(userId);
         }
+        if (response==null){
+            return new User(0);
+        }else if(response.getPassword().equals(password)){
+            return response;
+        }else {
+            return new User(0);
+        }
+    }
+    public User authorization(@RequestParam Integer id){
+        return userRepository.findUserById(id);
     }
     @PostMapping
     public String registration(@RequestBody User user){

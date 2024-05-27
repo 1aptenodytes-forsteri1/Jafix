@@ -7,7 +7,7 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = (item) => {
         // Проверяем наличие товара в корзине
-        const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
+        const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id && cartItem.whatIs === item.whatIs);
         if (existingItemIndex !== -1) {
             // Если товар уже есть в корзине, увеличиваем его количество на 1
             const updatedCart = [...cart];

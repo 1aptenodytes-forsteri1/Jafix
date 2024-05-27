@@ -1,7 +1,7 @@
 // src/services/ingredientService.js
 import axios from 'axios';
 
-const API_URL = 'http://your-server-url.com'; // Замените на URL вашего сервера
+const API_URL = 'http://localhost:8080'; // Замените на URL вашего сервера
 
 export const fetchIngredients = async () => {
   try {

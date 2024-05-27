@@ -61,7 +61,7 @@ public class OrderRepository {
             jdbcTemplate.update(addCustom,customRecipe.getId(),order.getOrderId());
         }
     }
-    private Order getLatestOrder(){
+    public Order getLatestOrder(){
         String sql = "SELECT * FROM customers_order WHERE order_id = (SELECT MAX(order_id) FROM customers_order);";
         return jdbcTemplate.query(sql,orderRowMapper).get(0);
     }
@@ -83,11 +83,36 @@ public class OrderRepository {
         return orders;
     }
     private List<CoffeeOrder> getCoffeesByOrderId(Integer id){
-        String sql = "SELECT * FROM coffee_order";
-        return jdbcTemplate.query(sql,coffeeOrderRowMapper);
+        String sql = "SELECT * FROM coffee_order WHERE order_id = ?";
+        return jdbcTemplate.query(sql,coffeeOrderRowMapper,id);
     }
     public void completeOrder(Integer orderId){
         String sql = "UPDATE customers_order SET active = 0 WHERE order_id = ?;";
         jdbcTemplate.update(sql,orderId);
+    }
+    public Order getOrderById(Integer id){
+        String sql = "SELECT * FROM customers_order WHERE order_id = ?";
+        Order order = jdbcTemplate.query(sql,orderRowMapper,id).get(0);
+        order.setCustomRecipes(getCustomRecipesByCoffeeOrders(getCoffeesByOrderId(id)));
+        order.setStandardRecipes(getStandardRecipesByCoffeeOrders(getCoffeesByOrderId(id)));
+        return order;
+    }
+    private List<CustomRecipe> getCustomRecipesByCoffeeOrders(List<CoffeeOrder> coffeeOrders){
+        List<CustomRecipe> customRecipes = new ArrayList<>();
+        for (CoffeeOrder coffeeOrder : coffeeOrders){
+            if (coffeeOrder.getCustomRecipeId()>0){
+                customRecipes.add(customRecipeRepository.getRecipeByID(coffeeOrder.getCustomRecipeId()));
+            }
+        }
+        return customRecipes;
+    }
+    private List<StandardRecipe> getStandardRecipesByCoffeeOrders(List<CoffeeOrder> coffeeOrders){
+        List<StandardRecipe> standardRecipes = new ArrayList<>();
+        for (CoffeeOrder coffeeOrder : coffeeOrders){
+            if (coffeeOrder.getStandardRecipeId()>0){
+                standardRecipes.add(standardRecipeRepository.getRecipeById(coffeeOrder.getStandardRecipeId()));
+            }
+        }
+        return standardRecipes;
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.Models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Purchase {
@@ -17,7 +18,7 @@ public class Purchase {
         this.id = id;
         this.cost = cost;
         this.userId = userId;
-        this.time = time;
+        this.time = LocalDateTime.now().toString();
         this.isActive = true;
         this.productOrders = productOrders;
     }

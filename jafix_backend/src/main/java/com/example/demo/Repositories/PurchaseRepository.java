@@ -34,18 +34,18 @@ public class PurchaseRepository {
                 r.getString("name")
         );
     };
-    private Purchase getLatestPurchase(){
+    public Purchase getLatestPurchase(){
         String sql = "SELECT * FROM purchase WHERE purchase_id = (SELECT MAX(purchase_id) FROM purchase)";
         return jdbcTemplate.query(sql,purchaseRowMapper).get(0);
     }
     private List<ProductOrder> getProductOrders (Integer purchaseId){
-        String sql = "SELECT product_order_id,product_order.product_id,purchase_id,name FROM product_order INNER JOIN product ON product_order.product_id = product.product_id ";
-        return jdbcTemplate.query(sql,productOrderRowMapper);
+        String sql = "SELECT product_order_id,product_order.product_id,purchase_id,name FROM product_order INNER JOIN product ON product_order.product_id = product.product_id WHERE purchase_id = ?";
+        return jdbcTemplate.query(sql,productOrderRowMapper,purchaseId);
     }
     @Transactional
     public void makePurchase(Purchase purchase){
         Purchase result = purchase;
-        String sql = "INSERT INTO purchase VALUES (NULL,?,?,?)";
+        String sql = "INSERT INTO purchase VALUES (NULL,?,?,?,1)";
         LocalDateTime localDateTime = LocalDateTime.parse(purchase.getTime());
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
         jdbcTemplate.update(sql,purchase.getCost(),purchase.getUserId(),timestamp);
@@ -65,5 +65,11 @@ public class PurchaseRepository {
     public void completePurchase(Integer purchaseId){
         String sql = "UPDATE purchase SET active = 0 WHERE purchase_id = ?;";
         jdbcTemplate.update(sql,purchaseId);
+    }
+    public Purchase getPurchaseById (Integer id){
+        String sql = "SELECT * FROM purchase WHERE purchase_id = ?";
+        Purchase purchase = jdbcTemplate.query(sql,purchaseRowMapper,id).get(0);
+        purchase.setProductOrders(getProductOrders(purchase.getId()));
+        return purchase;
     }
 }

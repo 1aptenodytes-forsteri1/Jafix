@@ -4,9 +4,9 @@ public class CoffeeOrder {
 
 
     private Integer id;
-    private Integer customRecipeId;
+    private Integer customRecipeId = 0;
     private Integer orderId;
-    private Integer standardRecipeId;
+    private Integer standardRecipeId = 0;
 
     public CoffeeOrder(Integer id, Integer customRecipeId, Integer orderId, Integer standardRecipeId) {
         this.id = id;

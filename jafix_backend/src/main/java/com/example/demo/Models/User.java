@@ -1,7 +1,11 @@
 package com.example.demo.Models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public class User {
-    public User(){}
+    public User(Integer id){
+        this.id = id;
+    }
 
     private Integer id;
     private String login;
@@ -17,6 +21,14 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.bonuses = bonuses;
+    }
+    @JsonCreator
+    public User(Integer id,String login, String password, String name, String surname) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
     }
     public boolean isAccess() {
         return access;
