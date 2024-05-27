@@ -1,0 +1,20 @@
+.coffee-points-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.coffee-point {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.coffee-point:hover {
+    background-color: #f0f0f0;
+}
+
+.selected {
+    background-color: #d3d3d3;
+}
