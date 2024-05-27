@@ -77,7 +77,7 @@ public class CustomRecipeRepository {
     @Transactional
     public void addRecipe(CustomRecipe customRecipe){
         String sql = "INSERT INTO custom_recipe VALUES (NULL,?,?,?)";
-        jdbcTemplate.update(sql,customRecipe.getUserId(),getCost(customRecipe.getComponents()),customRecipe.getName());
+        jdbcTemplate.update(sql,customRecipe.getUserId(),customRecipe.getCost(),customRecipe.getName());
         addComponents(customRecipe.getComponents(),getRecipeId());
     }
     public List<CustomRecipe> getRecipesByUser(Integer id){

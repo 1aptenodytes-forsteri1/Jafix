@@ -8,6 +8,10 @@ public class CustomRecipe{
     private Integer userId;
     private Double cost;
     private String name;
+
+
+
+    private String whatIs = "custom_recipe";
     private Map<String, String> components;
 
     public CustomRecipe(Integer id, Integer userId, Double cost, String name) {
@@ -53,6 +57,12 @@ public class CustomRecipe{
     public void setComponents(Map<String, String> components) {
         this.components = components;
     }
+    public String getWhatIs() {
+        return whatIs;
+    }
 
+    public void setWhatIs(String whatIs) {
+        this.whatIs = whatIs;
+    }
 
 }

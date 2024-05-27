@@ -7,13 +7,12 @@ public class StandardRecipe{
     private Integer id;
     private String name;
     private Double price;
-    private String image;
+    private String whatIs = "standard_recipe";
     private Map<String,String> components = new HashMap<String,String>();
-    public StandardRecipe(Integer id, String name, Double price, String image) {
+    public StandardRecipe(Integer id, String name, Double price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.image = image;
     }
     public void addComponent(String name, String amount){
         components.put(name,amount);
@@ -47,14 +46,12 @@ public class StandardRecipe{
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    public String getImage() {
-        return image;
+    public String getWhatIs() {
+        return whatIs;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setWhatIs(String whatIs) {
+        this.whatIs = whatIs;
     }
-
 
 }

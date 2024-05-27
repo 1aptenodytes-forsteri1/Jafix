@@ -21,7 +21,7 @@ public class CustomRecipeController {
     }
 
     @GetMapping
-    public List<CustomRecipe> getRecipesByUser(@RequestBody User user){
-        return customRecipeRepository.getRecipesByUser(user.getId());
+    public List<CustomRecipe> getRecipesByUser(@RequestParam Integer userId){
+        return customRecipeRepository.getRecipesByUser(userId);
     }
 }

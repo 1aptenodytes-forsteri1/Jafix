@@ -8,7 +8,8 @@ function FillMenu(props) {
 
     const handleAddToCart = (event) => {
         event.preventDefault();
-        addToCart(props);
+        addToCart({ ...props, title: props.name, whatIs: 'standard_recipe' });
+
     };
     const componentsArray = Object.entries(props.components).map(([key, value]) => (
         <p key={key}>{key}: {value}</p>

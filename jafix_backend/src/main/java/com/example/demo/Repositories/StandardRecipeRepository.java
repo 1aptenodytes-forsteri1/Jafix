@@ -21,8 +21,7 @@ public class StandardRecipeRepository {
         StandardRecipe standardRecipe = new StandardRecipe(
                 r.getInt("standard_recipe_id"),
                 r.getString("name"),
-                r.getDouble("price"),
-                r.getString("image")
+                r.getDouble("price")
         );
         return standardRecipe;
     };

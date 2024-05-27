@@ -7,6 +7,10 @@ public class Product {
     private Integer id;
     private Double price;
     private String name;
+
+
+
+    private String whatIs = "product";
     private Map<String,String> components = new HashMap<>();
 
     public Product(Integer id, Double price, String name, Map<String, String> components) {
@@ -44,7 +48,13 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+    public String getWhatIs() {
+        return whatIs;
+    }
 
+    public void setWhatIs(String whatIs) {
+        this.whatIs = whatIs;
+    }
     public Map<String, String> getComponents() {
         return components;
     }
