@@ -15,7 +15,7 @@ export default function MainPageOrder() {
     
             try {
                 const response = await axios.get('http://localhost:8080/active_order', {
-                    params: { id: selectedCoffeePoint.id } 
+                    params: { id: selectedCoffeePoint } 
                 });
                 setOrders(response.data); 
                 setLoading(false);

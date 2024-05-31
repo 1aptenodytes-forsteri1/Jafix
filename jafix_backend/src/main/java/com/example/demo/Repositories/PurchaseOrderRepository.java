@@ -34,7 +34,7 @@ public class PurchaseOrderRepository {
 
     @Transactional
     public void makeOrder(PurchaseOrder purchaseOrder){
-        String sql = "INSERT INTO purchase_order VALUES (NULL,?,?,?,?,?)";
+        String sql = "INSERT INTO purchase_order VALUES (NULL,?,?,?,?,?,1)";
         Order order = purchaseOrder.getOrder();
         Purchase purchase = purchaseOrder.getPurchase();
         purchase.setUserId(purchaseOrder.getUserId());
