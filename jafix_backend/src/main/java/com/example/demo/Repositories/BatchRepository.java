@@ -29,7 +29,7 @@ public class BatchRepository {
         return jdbcTemplate.query(sql,idRowMapper).get(0);
     }
     public List<Batch> getBatchesByCoffeeHouse(Integer coffeeHouseId){
-        String sql = String.format("SELECT batch_id, coffe_house_id, name, amount, expiration FROM batch INNER JOIN ingredient ON batch.ingredient_id = ingredient.ingredient_id WHERE coffe_house_id = %d;",coffeeHouseId);
+        String sql = String.format("SELECT batch_id, coffe_house_id, name, SUM(amount) as total, expiration FROM batch INNER JOIN ingredient ON batch.ingredient_id = ingredient.ingredient_id WHERE coffe_house_id = 1 GROUP BY name HAVING total < 10000;",coffeeHouseId);
         return jdbcTemplate.query(sql,batchRowMapper);
     }
     public void addBatch(Batch batch){

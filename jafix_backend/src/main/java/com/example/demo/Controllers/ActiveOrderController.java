@@ -1,5 +1,4 @@
 package com.example.demo.Controllers;
-
 import com.example.demo.Models.PurchaseOrder;
 import com.example.demo.Repositories.PurchaseOrderRepository;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,8 @@ public class ActiveOrderController {
         this.purchaseOrderRepository = purchaseOrderRepository;
     }
     @GetMapping
-    public List<PurchaseOrder> getActiveOrders(){
-        return purchaseOrderRepository.getActiveOrders();
+    public List<PurchaseOrder> getActiveOrders(@RequestParam Integer id){
+        return purchaseOrderRepository.getActiveOrders(id);
     }
     @PatchMapping
     public void deactivateOrder(@RequestParam Integer orderId){

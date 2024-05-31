@@ -54,9 +54,9 @@ public class PurchaseOrderRepository {
         }
         return purchaseOrders;
     }
-    public List<PurchaseOrder> getActiveOrders(){
-        String sql = "SELECT * FROM purchase_order WHERE active = 1";
-        List<PurchaseOrder> purchaseOrders = jdbcTemplate.query(sql,purchaseOrderRowMapper);
+    public List<PurchaseOrder> getActiveOrders(Integer id){
+        String sql = "SELECT * FROM purchase_order WHERE active = 1 AND coffe_house_id = ?";
+        List<PurchaseOrder> purchaseOrders = jdbcTemplate.query(sql,purchaseOrderRowMapper,id);
         for (PurchaseOrder purchaseOrder : purchaseOrders){
             purchaseOrder.setPurchase(purchaseRepository.getPurchaseById(purchaseOrder.getPurchase().getId()));
             purchaseOrder.setOrder(orderRepository.getOrderById(purchaseOrder.getOrder().getOrderId()));

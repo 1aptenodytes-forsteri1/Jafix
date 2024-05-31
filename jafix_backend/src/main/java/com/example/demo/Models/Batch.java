@@ -61,7 +61,8 @@ public class Batch {
     }
     public Date getExpirationDate(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(expiration, formatter);
+        LocalDate localDate = LocalDate.now();
+        localDate.plusMonths(3);
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }
