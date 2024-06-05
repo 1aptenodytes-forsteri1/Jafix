@@ -47,7 +47,7 @@ public class BatchRepository {
     public void spendIngredient(Purchase purchase){
         String sql = "UPDATE batch SET amount = amount - ? WHERE batch_id = ?;";
         for (ProductOrder productOrder : purchase.getProductOrders()){
-
+            
         }
     }
     private Integer getProperBatchId(Integer coffeeHouseId, String ingredient){
