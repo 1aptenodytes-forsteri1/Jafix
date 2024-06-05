@@ -19,6 +19,9 @@ public class IngredientRepository {
                 r.getString("description")
         );
     };
+    RowMapper<Integer> idRowMapper = (r,i)->{
+        return r.getInt("ingredient_id");
+    };
     IngredientRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -26,5 +29,8 @@ public class IngredientRepository {
         String sql = "SELECT * FROM ingredient";
         return jdbcTemplate.query(sql,rowMapper);
     }
-
+    public Integer getIdByName(String name){
+        String sql = "SELECT ingredient_id FROM ingredient WHERE name = ?";
+        return jdbcTemplate.query(sql, idRowMapper, name).get(0);
+    }
 }

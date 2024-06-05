@@ -21,6 +21,7 @@ public class BatchController {
     }
     @PostMapping
     public void addBatch(@RequestBody Batch batch){
+        batch.setAmount(10000);
         batchRepository.addBatch(batch);
     }
 }

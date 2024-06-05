@@ -29,15 +29,14 @@ export default function MainPageOrder() {
     }, [selectedCoffeePoint]);
     
 
-    const handleReorder = async (id) => {
+    const handleReorder = async (orderId) => {
         try {
             await axios.patch('http://localhost:8080/active_order', null, {
-                params: { id }
+                params: { orderId }
             });
             setOrders(orders.map(order => 
-                order.id === id ? { ...order, active: true } : order
+                order.id === orderId ? { ...order, active: false } : order
             ));
-            alert('Заказ повторно оформлен!');
         } catch (error) {
             console.error('Ошибка при повторном заказе:', error);
             alert('Произошла ошибка при повторном заказе. Попробуйте снова.');
@@ -83,11 +82,10 @@ export default function MainPageOrder() {
                                 </li>
                             ))}
                         </ul>
-                        {!order.active && (
-                            <button onClick={() => handleReorder(order.id)} className={classes.reorderButton}>
-                                Заказать повторно
+                        <button onClick={() => handleReorder(order.id)} className={classes.reorderButton}>
+                                Заказ сделан
                             </button>
-                        )}
+
                     </div>
                 ))}
             </div>

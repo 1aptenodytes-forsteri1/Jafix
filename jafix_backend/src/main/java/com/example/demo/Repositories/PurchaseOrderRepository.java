@@ -63,9 +63,11 @@ public class PurchaseOrderRepository {
         }
         return purchaseOrders;
     }
+    @Transactional
     public void deactivateOrder(Integer id){
         String sql = "UPDATE purchase_order SET active = 0 WHERE purchase_order_id = ?";
         jdbcTemplate.update(sql,id);
+
     }
     public void activateOrder(Integer id){
         String sql = "UPDATE purchase_order SET active = 1 WHERE purchase_order_id = ?";

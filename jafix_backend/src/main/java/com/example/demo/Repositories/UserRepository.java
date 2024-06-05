@@ -36,7 +36,7 @@ public class UserRepository {
 
     }
     public void addUser(String login, String password, String name, String surname){
-        String sql = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, 0.0, NULL)";
+        String sql = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, 0.0)";
         jdbc.update(sql,login,password,name,surname);
     }
     public void updateUser(User user){

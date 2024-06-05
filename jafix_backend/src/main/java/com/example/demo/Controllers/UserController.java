@@ -26,6 +26,7 @@ public class UserController {
         if (response==null){
             return new User(0);
         }else if(response.getPassword().equals(password)){
+            response.setAccess(true);
             return response;
         }else {
             return new User(0);

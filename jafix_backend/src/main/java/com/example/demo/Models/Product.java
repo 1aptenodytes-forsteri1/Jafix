@@ -7,9 +7,6 @@ public class Product {
     private Integer id;
     private Double price;
     private String name;
-
-
-
     private String whatIs = "product";
     private Map<String,String> components = new HashMap<>();
 
