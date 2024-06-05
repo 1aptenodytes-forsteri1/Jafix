@@ -40,8 +40,10 @@ public class CustomRecipeRepository {
         );
     };
     private final JdbcTemplate jdbcTemplate;
-    CustomRecipeRepository(JdbcTemplate jdbcTemplate){
+    private final IngredientRepository ingredientRepository;
+    CustomRecipeRepository(JdbcTemplate jdbcTemplate, IngredientRepository ingredientRepository){
         this.jdbcTemplate = jdbcTemplate;
+        this.ingredientRepository = ingredientRepository;
     }
     private Integer findId(String name){
         String sql = String.format("SELECT batch_id FROM batch INNER JOIN ingredient ON batch.ingredient_id = ingredient.ingredient_id WHERE name = \"%s\"",name);
@@ -49,8 +51,8 @@ public class CustomRecipeRepository {
     }
     private void addComponents(Map<String,String> components, Integer id){
         for (Map.Entry<String,String> entry : components.entrySet()){
-            String sql = "INSERT INTO custom_recipe_component VALUES (NULL,?,?,?)";
-            jdbcTemplate.update(sql,id,findId(entry.getKey()),Integer.parseInt(entry.getValue().replaceAll("\\D+", "")));
+            String sql = "INSERT INTO custom_recipe_component VALUES (NULL,?,?,?,?)";
+            jdbcTemplate.update(sql,id,findId(entry.getKey()),Integer.parseInt(entry.getValue().replaceAll("\\D+", "")),ingredientRepository.getIdByName(entry.getKey()));
         }
     }
     private Integer getRecipeId(){
