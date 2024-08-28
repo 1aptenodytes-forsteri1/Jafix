@@ -171,7 +171,7 @@ useEffect(() => {
           <button className='btn' onClick={handleCreateRecipe}>Создать рецепт</button>
         </li>
         <li className={classes.create_recipe_items}>
-          <p className='final_price'>Итоговая цена: {totalPrice.toFixed(2)}</p>
+          <p className='final_price'>Итоговая цена: {totalPrice.toFixed(2)} BYN</p>
         </li>
       </ul>
     </div>

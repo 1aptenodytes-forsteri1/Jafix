@@ -1,0 +1,15 @@
+.menu{
+    background: url("./qwerty.jpg") no-repeat;
+padding: 10px;}
+.box{
+    display: flex;
+    background-color: white;
+    width: 500px;
+    border-radius: 1em;
+    margin: 30px;
+    padding: 10px;
+margin-left: 480px;
+}
+.imgLog{
+    width: 100px;
+}

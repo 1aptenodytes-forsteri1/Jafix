@@ -3,6 +3,7 @@ import axios from 'axios'; // Импортируем Axios
 import classes from './My_recipe.module.css';
 import lattte from '../../Men/latte.svg';
 import { CartContext } from '../../../CartContext';
+import podl from './qwerty.jpg'
 import { useAuth } from '../../../AuthContext'; // Импортируем контекст аутентификации
 
 function FillMenu(props) {
@@ -20,11 +21,11 @@ function FillMenu(props) {
 
     return (
         <div className={classes.box}>
-            <img src={lattte} alt="" />
+            <img className={classes.imgLog} src={lattte} alt="" />
             <div className={classes.content}>
                 <h3>{props.name}</h3>
                 {componentsArray}
-                <span>{props.cost}</span>
+                <span>{props.cost} BYN</span>
                 <button className='btn' data-id={props.id} onClick={handleAddToCart}>Нажми</button>
             </div>
         </div>

@@ -19,7 +19,7 @@ function FillMenu(props) {
         <div className={classes.content}>
             <h3>{props.name}</h3>
             {componentsArray}
-            <span>{props.price}</span>
+            <span>{props.price} BYN</span>
             <button className='btn' data-id={props.id} onClick={handleAddToCart}>Нажми</button>
         </div>
     </div>

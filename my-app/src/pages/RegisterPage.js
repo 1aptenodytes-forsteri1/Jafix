@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { registerUser } from '../authService';
+import { registerUser } from '../authService'
+import classes from './RegisterPage.module.css'
 
 const RegisterPage = () => {
   const { register } = useAuth();
@@ -26,8 +27,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+    <div className={classes.mainLog}>
+      <h1 className='heading'>Register</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
       <input
@@ -36,6 +37,7 @@ const RegisterPage = () => {
         placeholder="Login"
         value={userDetails.username}
         onChange={handleInputChange}
+        className={classes.inLog}
       />
       <input
         type="password"
@@ -43,6 +45,7 @@ const RegisterPage = () => {
         placeholder="Password"
         value={userDetails.password}
         onChange={handleInputChange}
+        className={classes.inLog}
       />
       <input
         type="text"
@@ -50,6 +53,7 @@ const RegisterPage = () => {
         placeholder="Name"
         value={userDetails.name}
         onChange={handleInputChange}
+        className={classes.inLog}
       />
       <input
         type="text"
@@ -57,8 +61,9 @@ const RegisterPage = () => {
         placeholder="Surname"
         value={userDetails.surname}
         onChange={handleInputChange}
+        className={classes.inLog}
       />
-      <button onClick={handleRegister}>Register</button>
+      <button onClick={handleRegister}className={classes.butLog}>Register</button>
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>

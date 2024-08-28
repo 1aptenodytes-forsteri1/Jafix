@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import classes from './Baskets.module.css';
 import coffebas from './coffee.svg';
-import recipeImage from './cross_baskets.svg';
+import recipeImage from './TTT.svg';
 import productImage from './imageProduct.svg';
 import delete_card from './cross_baskets.svg';
 import { CartContext } from '../../CartContext';
@@ -81,19 +81,19 @@ export default function Baskets() {
                     <div key={index} className={classes.card}>
                         <img className={classes.img_baskets} src={getImage(item.whatIs)} alt="" />
                         <h2 className='card_des'>{item.title}</h2>
-                        <div className="amount_coffee">
-                            <button className="minus_amount" onClick={() => handleDecreaseQuantity(index)}>-</button>
+                        <div className={classes.amount_coffee}>
+                            <button className={classes.minus_amount} onClick={() => handleDecreaseQuantity(index)}>-</button>
                             <p className='card_amount_coffee'>{item.quantity}</p>
-                            <button className="plus_amount" onClick={() => handleIncreaseQuantity(index)}>+</button>
+                            <button className={classes.plus_amount} onClick={() => handleIncreaseQuantity(index)}>+</button>
                         </div>
-                        <p className='card_price'>{item.price}</p>
+                        <p className='card_price'>{item.price} BYN</p>
                         <button className={classes.card_delete} onClick={() => removeFromCart(index)}>
                             <img src={delete_card} alt="" />
                         </button>
                     </div>
                 ))}
                 <div className={classes.total}>
-                    <h2>Total Price: {calculateTotalPrice()}</h2>
+                    <h2>Total Price: {calculateTotalPrice()} BYN</h2>
                     <button className={classes.adPoitn} onClick={handleOrderClick}>Оформить заказ</button>
                 </div>
             </div>

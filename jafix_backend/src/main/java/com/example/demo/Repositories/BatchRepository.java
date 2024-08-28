@@ -1,14 +1,12 @@
 package com.example.demo.Repositories;
 
-import com.example.demo.Models.Batch;
-import com.example.demo.Models.ProductComponent;
-import com.example.demo.Models.ProductOrder;
-import com.example.demo.Models.Purchase;
+import com.example.demo.Models.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BatchRepository {
@@ -44,10 +42,46 @@ public class BatchRepository {
         String sql = "INSERT INTO batch VALUES (NULL,?,?,?,?)";
         jdbcTemplate.update(sql,batch.getCoffee_house_id(),getIdByIngredient(batch.getIngredient()),batch.getAmount(),batch.getExpirationDate());
     }
-    public void spendIngredient(Purchase purchase){
+    public void spendIngredient(PurchaseOrder purchaseOrder){
         String sql = "UPDATE batch SET amount = amount - ? WHERE batch_id = ?;";
-        for (ProductOrder productOrder : purchase.getProductOrders()){
-            
+        Product product;
+        Integer amount;
+        String ingredient;
+        for (ProductOrder productOrder : purchaseOrder.getPurchase().getProductOrders()){
+            product = productRepository.getProductById(productOrder.getProductId());
+            if (product.getComponents() != null){
+                for (Map.Entry<String,String> entry: product.getComponents().entrySet()){
+                    ingredient = entry.getKey();
+                    amount = Integer.parseInt(entry.getValue().replaceAll("\\D+", ""));
+                    try {
+                        jdbcTemplate.update(sql,amount,getProperBatchId(purchaseOrder.getCoffeeHouseId(),ingredient));
+                    }catch (IndexOutOfBoundsException e){continue;}
+                }
+            }
+
+        }
+        for(StandardRecipe standardRecipe : purchaseOrder.getOrder().getStandardRecipes()){
+            if (standardRecipe.getComponents() != null){
+                for (Map.Entry<String,String> entry: standardRecipe.getComponents().entrySet()){
+                    ingredient = entry.getKey();
+                    amount = Integer.parseInt(entry.getValue().replaceAll("\\D+", ""));
+                    try {
+                        jdbcTemplate.update(sql,amount,getProperBatchId(purchaseOrder.getCoffeeHouseId(),ingredient));
+                    }catch (IndexOutOfBoundsException e){continue;}
+                }
+            }
+        }
+        for(CustomRecipe customRecipe : purchaseOrder.getOrder().getCustomRecipes()){
+            if (customRecipe.getComponents() != null){
+                for (Map.Entry<String,String> entry: customRecipe.getComponents().entrySet()){
+                    ingredient = entry.getKey();
+                    amount = Integer.parseInt(entry.getValue().replaceAll("\\D+", ""));
+                    try {
+                        jdbcTemplate.update(sql,amount,getProperBatchId(purchaseOrder.getCoffeeHouseId(),ingredient));
+                    }catch (IndexOutOfBoundsException e){continue;}
+
+                }
+            }
         }
     }
     private Integer getProperBatchId(Integer coffeeHouseId, String ingredient){

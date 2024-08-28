@@ -5,15 +5,18 @@ import classes from './Account.module.css'
 export default function Account(){
     return(
         <>
+        <div className={classes.rou}>
         <ul className={classes.acc_list}>
-        <Link to='/' className="linkes">Главная</Link>
-        <Link to='/bonus' className="linkes">Бонусы</Link>
-        <Link to='/personal_i' className="linkes">Личные данные</Link>
-        <Link to='/order' className="linkes">История заказов</Link>
-        <Link to='/recipe_yoy' className="linkes">Мои рецепты</Link>
-        <Link to='/sup' className="linkes">Служба поддержки</Link>
+        <Link to='/' className={classes.linkes}>Главная</Link>
+       
+        <Link to='/personal_i' className={classes.linkes}>Личные данные</Link>
+        <Link to='/order' className={classes.linkes}>История заказов</Link>
+        <Link to='/recipe_yoy' className={classes.linkes}>Мои рецепты</Link>
+        
               
 </ul>
+        </div>
+        
 
         </>
     )

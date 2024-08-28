@@ -50,4 +50,15 @@ public class ProductRepository {
         String sql = "SELECT element_id, product_element.batch_id, product_id, product_element.amount, name, units FROM product_element INNER JOIN batch ON product_element.batch_id = batch.batch_id INNER JOIN ingredient ON batch.ingredient_id = ingredient.ingredient_id WHERE product_id = ?;";
         return jdbcTemplate.query(sql, componentRowMapper, id);
     }
+    public Product getProductById(Integer id){
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product WHERE product_id = ?";
+        for (Product product : jdbcTemplate.query(sql, productRowMapper, id)){
+            for (ProductComponent productComponent : getComponentsById(product.getId())){
+                product.addComponent(productComponent.getIngredient(),productComponent.getAmount());
+            }
+            products.add(product);
+        }
+        return products.get(0);
+    }
 }

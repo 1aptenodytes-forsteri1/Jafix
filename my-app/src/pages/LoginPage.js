@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { loginUser } from '../authService';
+import classes from './LoginPage.module.css'
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -30,8 +31,9 @@ const LoginPage = () => {
     }
   };
   return (
-    <div>
-      <h1>Login</h1>
+  
+      <div className={classes.mainLog}>
+      <h1 className='heading'>Login</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <input
         type="text"
@@ -39,6 +41,7 @@ const LoginPage = () => {
         placeholder="Login"
         value={credentials.login}
         onChange={handleInputChange}
+        className={classes.inLog}
       />
       <input
         type="password"
@@ -46,12 +49,14 @@ const LoginPage = () => {
         placeholder="Password"
         value={credentials.password}
         onChange={handleInputChange}
+        className={classes.inLog}
       />
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin} className={classes.butLog}>Login</button>
       <p>
         Don't have an account? <Link to="/register">Register</Link>
       </p>
-    </div>
+      </div>
+      
   );
 };
 

@@ -1,9 +1,24 @@
 .linkes{
-
+border-bottom:1px solid #bf8a5c;
 }
 .acc_list{
-display: flex;
-flex-direction: column;
-padding: 2em;
-gap: 2em;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    gap: 3em;
+    background-color: #ffffff;
+    border: 0.2em solid #bf8a5c;
+    border-radius: 1em;
+    margin-top: 10px;
+    align-items: center;
+    width: 600px;
+    font-size: 22px;
+}
+
+.rou{
+    background-color: white;
+    border-radius: 1em;
+    align-items: center;
+    justify-content: center;
+    margin-left: 32%;
 }

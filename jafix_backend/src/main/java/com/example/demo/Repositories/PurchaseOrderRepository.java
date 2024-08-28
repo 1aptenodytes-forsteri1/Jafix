@@ -54,6 +54,15 @@ public class PurchaseOrderRepository {
         }
         return purchaseOrders;
     }
+    public PurchaseOrder getLatest(){
+        String sql = "SELECT * FROM purchase_order WHERE purchase_order_id = (SELECT MAX(purchase_order_id) FROM purchase_order)";
+        List<PurchaseOrder> purchaseOrders = jdbcTemplate.query(sql,purchaseOrderRowMapper);
+        for (PurchaseOrder purchaseOrder : purchaseOrders){
+            purchaseOrder.setPurchase(purchaseRepository.getPurchaseById(purchaseOrder.getPurchase().getId()));
+            purchaseOrder.setOrder(orderRepository.getOrderById(purchaseOrder.getOrder().getOrderId()));
+        }
+        return purchaseOrders.get(0);
+    }
     public List<PurchaseOrder> getActiveOrders(Integer id){
         String sql = "SELECT * FROM purchase_order WHERE active = 1 AND coffe_house_id = ?";
         List<PurchaseOrder> purchaseOrders = jdbcTemplate.query(sql,purchaseOrderRowMapper,id);
